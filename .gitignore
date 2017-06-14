@@ -1,0 +1,7 @@
+node_modules/
+frame/
+css/
+dist/
+.sass-cache/
+.idea/
+.vscode/
