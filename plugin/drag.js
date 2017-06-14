@@ -24,10 +24,61 @@ export default class Drager {
         defineProt.def(this.position, 'y', 0, (v) => {
             this.moveMirror ()
         });
-    }
 
+        this.init();
+    }
+    init () {
+        $("#dragAble")
+            .on("mousedown", "li", function(){
+                let $this = $(this);
+                $this.addClass("disabled");
+                $this.clone().removeClass("disabled").addClass("current").appendTo($this.parent());
+            })
+        $(document)
+            .on("mousemove", (e) => {
+                this.position.x = e.pageX
+                this.position.y = e.pageY
+                // 拖动时 根据e.target确定要插入的位置
+                console.log(getElementViewTop(e.target))
+            })
+            .on("mouseup", () => {
+                $("#dragAble").find("li.current").removeClass("current")
+            })
+    }
     moveMirror () {
-        
+        $("#dragAble").find("li.current").css({
+            position: "absolute",
+            top: this.position.y+"px",
+            left: this.position.x+"px"
+        })
     }
 
 }
+    function getElementViewLeft(element){
+　　　　var actualLeft = element.offsetLeft;
+　　　　var current = element.offsetParent;
+　　　　while (current !== null){
+　　　　　　actualLeft += current.offsetLeft;
+　　　　　　current = current.offsetParent;
+　　　　}
+　　　　if (document.compatMode == "BackCompat"){
+　　　　　　var elementScrollLeft=document.body.scrollLeft;
+　　　　} else {
+　　　　　　var elementScrollLeft=document.documentElement.scrollLeft; 
+　　　　}
+　　　　return actualLeft-elementScrollLeft;
+    }
+    function getElementViewTop(element){
+　　　　var actualTop = element.offsetTop;
+　　　　var current = element.offsetParent;
+　　　　while (current !== null){
+　　　　　　actualTop += current. offsetTop;
+　　　　　　current = current.offsetParent;
+　　　　}
+　　　　 if (document.compatMode == "BackCompat"){
+　　　　　　var elementScrollTop=document.body.scrollTop;
+　　　　} else {
+　　　　　　var elementScrollTop=document.documentElement.scrollTop; 
+　　　　}
+　　　　return actualTop-elementScrollTop;
+　　}

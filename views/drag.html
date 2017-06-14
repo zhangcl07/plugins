@@ -2,8 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>virtual-dom</title>
-        <link rel="stylesheet" href="./css/style.css" />
+        <title>drag</title>
         <style>
             .drag_list{
                 width: 200px;
@@ -17,6 +16,9 @@
                 background: rgba(255, 255, 255, .5);
                 margin-bottom: 10px;
                 cursor: -webkit-grab;
+            }
+            .drag_list li.disabled{
+                opacity: .3
             }
             .drag_list li.current{
                 cursor: -webkit-grabbing
@@ -33,20 +35,10 @@
                 <li>5</li>
             </ul>
         </div>
-        <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
-        <script type="text/javascript" src="./dist/plugin/drag.bundle.js"></script>
+        <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../script/drag.bundle.js"></script>
         <script>
-            $("#dragAble")
-                .on("mousedown", "li", function(){
-                    $(this).addClass("current")
-                })
-            $(document)
-                .on("mousemove", function(){
-                    
-                })
-                .on("mouseup", function(){
-                    $("#dragAble").find("li.current").removeClass("current")
-                })
+            
         </script>
     </body>
 </html>
