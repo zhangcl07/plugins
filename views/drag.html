@@ -9,7 +9,8 @@
                 background: #942A57;
                 padding: 10px;
             }
-            .drag_list li {
+            .drag_list > div,
+            .mirror{
                 height: 30px;
                 line-height: 30px;
                 padding: 5px;
@@ -17,23 +18,23 @@
                 margin-bottom: 10px;
                 cursor: -webkit-grab;
             }
-            .drag_list li.disabled{
+            .drag_list > div.disabled{
                 opacity: .3
             }
-            .drag_list li.current{
+            .mirror{
+                position: absolute;
+                width: 180px;
                 cursor: -webkit-grabbing
             }
         </style>
     </head>
     <body>
         <div id="dragAble" class="drag_list">
-            <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-            </ul>
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
         </div>
         <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="../script/drag.bundle.js"></script>
