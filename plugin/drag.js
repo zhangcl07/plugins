@@ -17,6 +17,9 @@ import defineProt from './../script/defineProt'
 
 export default class Drager {
   constructor(config) {
+    Object.assign(this, config);
+    console.log(this)
+    this.$el = document.getElementById(this.el)
     this.position = {
       x: 0,
       y: 0
@@ -31,29 +34,38 @@ export default class Drager {
     this.init()
   }
   init() {
-    var self = this;
-    $('#dragAble').on('mousedown', '.item', function() {
-      let $this = $(this)
-      $this.addClass('disabled')
-      $this
-        .clone()
-        .removeClass('disabled')
-        .addClass('mirror')
-        .appendTo('body')
-      // todo 计算当前位置
+    let self = this
+    let $items = $("#"+this.el).find("."+this.itemClass),
+        eleDrag = null
+    $items.attr("draggable", true)
+    $items.each(function(i, el){
+      el.onselectstart = function() {
+          return false;
+      };
+      el.ondragstart = function(ev){
+        ev.dataTransfer.effectAllowed = "move";
+        ev.dataTransfer.setData("text", ev.target.innerHTML);
+        // ev.dataTransfer.setDragImage(ev.target, 0, 0);
+        eleDrag = ev.target;
+        return true;
+      }
     })
-    $(document)
-      .on('mousemove', e => {
-        this.position.x = e.pageX
-        this.position.y = e.pageY
-        // todo 拖动时 根据e.target确定要插入的位置
-        console.log(getElementViewTop(e.target))
-      })
-      .on('mouseup', () => {
-        $('#dragAble').find('div.disabled').removeClass('disabled')
-        $('.mirror').remove()
-        // 更改数据 重绘列表
-      })
+    // this.el.ondropstart =  function(e) {
+      
+    //   // todo 计算当前位置
+    // }
+    // $(document)
+    //   .on('mousemove', e => {
+    //     this.position.x = e.pageX
+    //     this.position.y = e.pageY
+    //     // todo 拖动时 根据e.target确定要插入的位置
+    //     console.log(getElementViewTop(e.target))
+    //   })
+    //   .on('mouseup', () => {
+    //     $('#dragAble').find('div.disabled').removeClass('disabled')
+    //     $('.mirror').remove()
+    //     // 更改数据 重绘列表
+    //   })
   }
   moveMirror() {
     $('.mirror').css({
