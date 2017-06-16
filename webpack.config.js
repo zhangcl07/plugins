@@ -1,9 +1,9 @@
 var webpack = require('webpack'),
     path = require('path');
 module.exports = {
-    entry: './plugin/drag.js',
+    entry: './script/drag.js',
     output: {
-        path: path.join(__dirname, './dist/plugin'),
+        path: path.join(__dirname, './script'),
         filename: 'drag.bundle.js'
     },
     module: {
