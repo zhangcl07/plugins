@@ -1,7 +1,27 @@
 /**
  * Created by zhangchuanliang on 2017/6/12.
  */
-
+Element.prototype.hasParent = function (node) {
+  if(typeof node !== 'string'){
+    return node
+  }
+  // let _attr = '';
+  // if(node[0] === '#'){
+  //   _attr = 'id'
+  // }else if(node[0] === '.'){
+  //   _attr = 'className'
+  // }else{
+  //   _attr = 'tagName'
+  // }
+  function parents (element) {
+    return (element.parentElement && element.parentElement['id'] === node)
+  }
+  if (!parents (this)) {
+    parents(this.parentElement)
+  }else{
+    return true
+  }
+}
 export default class Drager {
   constructor(config) {
     Object.assign(this, config);
@@ -35,28 +55,28 @@ export default class Drager {
       event.target.classList.add(this.dragClass)
     }, false);
 
-    document.addEventListener("dragstart", function( event ) {
-      self.eleDrag = event.target;
+    document.addEventListener("dragstart", ( event ) => {
+      this.eleDrag = event.target;
     }, false);
 
-    document.addEventListener("dragend", function( event ) {
-
+    document.addEventListener("dragend", ( event ) => {
+      this.eleDrag.classList.remove(this.dragClass);
     }, false);
 
     /* 鼠标移到drop元素上 */
-    document.addEventListener("dragover", function( event ) {
+    document.addEventListener("dragover", ( event ) => {
       event.preventDefault();
     }, false);
 
-    document.addEventListener("dragenter", function( event ) {
+    document.addEventListener("dragenter", ( event ) => {
 
     }, false);
 
-    document.addEventListener("dragleave", function( event ) {
+    document.addEventListener("dragleave", ( event ) => {
 
     }, false);
 
-    document.addEventListener("drop", function( event ) {
+    document.addEventListener("drop", ( event ) => {
       /**
        * 1. 判断是否在this.el内
        * 2. 是否在itemClass上
@@ -65,30 +85,32 @@ export default class Drager {
        */
       event.preventDefault();
       // 如果元素是同一个，则不进行任何操作
-      if(self.eleDrag.isEqualNode(event.target))return;
+      if(this.eleDrag.isEqualNode(event.target))return;
       // move dragged elem to the selected drop target
-      if ( event.target.className === self.itemClass && $(event.target).parents(this.el).length>0) {
+      if ( event.target.className === this.itemClass && event.target.hasParent(this.el)) {
         let directive = 'afterend';
-        if(self.eleDrag.offsetTop > event.target.offsetTop){
+        if(this.eleDrag.offsetTop > event.target.offsetTop){
           directive = 'beforebegin'
         }
-        self.removeEleDrag();
-        event.target.insertAdjacentHTML(directive, self.eleDrag.outerHTML);
-      }else if(event.target.id === self.el){
+        this.removeEleDrag();
+        event.target.insertAdjacentHTML(directive, this.eleDrag.outerHTML);
+      }else if(event.target.id === this.el){
         // console.log(event.offsetY)
         let filterEls = $items.filter((el, i) => {
           return el.offsetTop >= event.offsetY
         })
 
-        self.removeEleDrag();
+        this.removeEleDrag();
 
         if(filterEls.length > 0){
-          filterEls[0].insertAdjacentHTML('beforebegin', self.eleDrag.outerHTML);
+          filterEls[0].insertAdjacentHTML('beforebegin', this.eleDrag.outerHTML);
         }else if(filterEls.length === 0){
-          self.$el.appendChild(self.eleDrag)
+          this.$el.appendChild(this.eleDrag)
         }
+      } else {
+        this.eleDrag.classList.remove(this.dragClass);
       }
-      $items = self.getItems();
+      $items = this.getItems();
     }, false);
   }
 }

@@ -1,7 +1,6 @@
 var webpack = require('webpack'),
     path    = require('path')
 module.exports = {
-  devtool: 'debug',
   entry  : [
     'webpack/hot/dev-server',
     'webpack-dev-server/client?http://localhost:8090',

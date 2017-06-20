@@ -17,7 +17,7 @@
     "webpack": "^2.6.1"
   },
   "scripts": {
-    "dev": "webpack-dev-server --devtool eval --progress --colors",
+    "dev": "webpack-dev-server --port 8090 --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "vincent",
