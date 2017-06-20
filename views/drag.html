@@ -9,8 +9,7 @@
                 background: #942A57;
                 padding: 10px;
             }
-            .drag_list > div,
-            .mirror{
+            .drag_list > div{
                 height: 30px;
                 line-height: 30px;
                 padding: 5px;
@@ -19,18 +18,14 @@
                 cursor: -webkit-grab;
             }
             .drag_list > div.disabled{
-                opacity: .3
-            }
-            .mirror{
-                position: absolute;
-                width: 180px;
+                opacity: .3;
                 cursor: -webkit-grabbing
             }
         </style>
     </head>
     <body>
         <div id="dragAble" class="drag_list">
-            <div class="item">1</div>
+            <div class="item">1<span>1-1</span></div>
             <div class="item">2</div>
             <div class="item">3</div>
             <div class="item">4</div>

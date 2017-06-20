@@ -1,7 +1,8 @@
 var webpack = require('webpack'),
     path = require('path');
 module.exports = {
-    entry: './script/drag.js',
+  devtool: 'debug',
+  entry: './script/drag.js',
     output: {
         path: path.join(__dirname, './script'),
         filename: 'drag.bundle.js'
@@ -19,10 +20,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ]
 }
