@@ -100,10 +100,12 @@ export default class Drager {
           return el.offsetTop >= event.offsetY
         })
 
+        if(filterEls.length === 1 && this.eleDrag.isEqualNode(filterEls[0]))return
+
         this.removeEleDrag();
 
         if(filterEls.length > 0){
-          filterEls[0].insertAdjacentHTML('beforebegin', this.eleDrag.outerHTML);
+          filterEls[0].insertAdjacentHTML('beforebegin', this.eleDrag.outerHTML)
         }else if(filterEls.length === 0){
           this.$el.appendChild(this.eleDrag)
         }

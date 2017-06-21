@@ -1,21 +1,18 @@
 var webpack = require('webpack'),
-    path    = require('path')
+  path = require('path'),
+  OpenBrowserPlugin = require('open-browser-webpack-plugin')
 module.exports = {
-  entry  : [
-    'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:8090',
-    './script/drag.js'
-  ],
-  output : {
-    path    : path.join(__dirname, './script'),
+  entry: ['./script/drag.js'],
+  output: {
+    path: path.join(__dirname, './script'),
     filename: 'drag.bundle.js'
   },
-  module : {
+  module: {
     loaders: [
       {
-        test   : /\.js$/,
-        loader : 'babel-loader',
-        query  : {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        query: {
           presets: ['env']
         },
         exclude: /(node_modules)/
@@ -27,6 +24,9 @@ module.exports = {
       compress: {
         warnings: false
       }
+    }),
+    new OpenBrowserPlugin({
+      url: 'http://localhost:9001'
     })
   ]
 }
