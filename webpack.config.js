@@ -5,7 +5,8 @@ module.exports = {
   entry: ['./script/drag.js'],
   output: {
     path: path.join(__dirname, './script'),
-    filename: 'drag.bundle.js'
+    filename: 'drag.bundle.js',
+    publicPath: './'
   },
   module: {
     loaders: [
