@@ -26,7 +26,7 @@ export default class Drager {
   constructor(config) {
     Object.assign(this, config);
     // console.log(this)
-    this.$el = document.getElementById(this.el);
+    this.$el = document.getElementById(this.id);
     this.items = this.getItems();
     this.eleDrag = null;
     this.init()
@@ -78,23 +78,23 @@ export default class Drager {
 
     document.addEventListener("drop", ( event ) => {
       /**
-       * 1. 判断是否在this.el内
+       * 1. 判断是否在this.id内
        * 2. 是否在itemClass上
        *    - 是：insertAdjacentHTML('beforebegin'|'afterend', html)
-       *    - 否：根据鼠标所在this.el的位置，判断是prepend or append
+       *    - 否：根据鼠标所在this.id的位置，判断是prepend or append
        */
       event.preventDefault();
       // 如果元素是同一个，则不进行任何操作
       if(this.eleDrag.isEqualNode(event.target))return;
       // move dragged elem to the selected drop target
-      if ( event.target.className === this.itemClass && event.target.hasParent(this.el)) {
+      if ( event.target.className === this.itemClass && event.target.hasParent(this.id)) {
         let directive = 'afterend';
         if(this.eleDrag.offsetTop > event.target.offsetTop){
           directive = 'beforebegin'
         }
         this.removeEleDrag();
         event.target.insertAdjacentHTML(directive, this.eleDrag.outerHTML);
-      }else if(event.target.id === this.el){
+      }else if(event.target.id === this.id){
         // console.log(event.offsetY)
         let filterEls = $items.filter((el, i) => {
           return el.offsetTop >= event.offsetY
