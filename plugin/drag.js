@@ -8,17 +8,23 @@
  * params: node为元素id
  */
 Element.prototype.hasParent = function(node) {
-  if (typeof node !== 'string') {
-    return !1
+  if (typeof node !== 'string')return
+  let num = 0
+  function Parents(element) {
+    if(element.parentElement && element.parentElement['id'] === node){
+      num++
+    }else{
+      try {
+        Parents(element.parentElement)
+      } catch (error) {}
+    }
   }
-  function parents(element) {
-    return element.parentElement && element.parentElement['id'] === node
+  Parents(this)
+
+  return function(){
+    return num
   }
-  if (!parents(this)) {
-    parents(this.parentElement)
-  } else {
-    return true
-  }
+
 }
 
 export default class Drager {
@@ -103,7 +109,7 @@ export default class Drager {
     // 如果drop时target为this.itemClass，并且父元素有this.id
     if (
       event.target.className === this.itemClass &&
-      event.target.hasParent(this.id)
+      event.target.hasParent(this.id)()
     ) {
       this.insertHTML(event)
     } else if (event.target.id === this.id) {
