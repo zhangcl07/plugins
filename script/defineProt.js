@@ -1,3 +1,10 @@
+function isArray(obj){
+    return Array.isArray(obj);
+}
+function isPlainObject(obj) {
+    return Object.prototype.toString.call( obj ) === "[object Object]";
+}
+
 function propFn (val,fn) {
     return {
         get: function(){return val},
@@ -15,20 +22,14 @@ function def (obj, key, val, fn) {
     Object.defineProperty(obj, key, propFn(val,fn))
 }
 
-function deepSetter(target, source){
-    var self = this;
-    // console.log(this);
-    for (var key in source) {
-        if (isPlainObject(source[key]) || isArray(source[key])) {
-            if (isPlainObject(source[key]) && !isPlainObject(target[key]))
-                target[key] = {};
-            if (isArray(source[key]) && !isArray(target[key]))
-                target[key] = extend([], ArrayProxy);
-            this.deepSetter(target[key], source[key])
+function deepSetter (target, fn) {
+    for (let key in target) {
+        if (isPlainObject(target[key]) || isArray(target[key])) {
+            deepSetter(target[key], fn)
         }
-        else if (source[key] !== undefined) {
+        else if (target[key] !== undefined) {
             (function(key){
-                var _value = source[key];
+                var _value = target[key];
                 Object.defineProperty(target, key, {
                     enumerable: true,
                     configurable: true,
@@ -38,14 +39,12 @@ function deepSetter(target, source){
                     set: function(v){
                         if(v === _value)return;
                         _value = v;
-                        // self.init(); todo 性能问题
+                        fn && fn(v)
                     }
                 })
             })(key);
-
         }
     }
-    return target
 }
 
 export default { def, deepSetter }
