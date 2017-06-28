@@ -21,9 +21,7 @@ Element.prototype.hasParent = function(node) {
   }
   Parents(this)
 
-  return function(){
-    return num
-  }
+  return num
 
 }
 
@@ -109,7 +107,7 @@ export default class Drager {
     // 如果drop时target为this.itemClass，并且父元素有this.id
     if (
       event.target.className === this.itemClass &&
-      event.target.hasParent(this.id)()
+      event.target.hasParent(this.id)
     ) {
       this.insertHTML(event)
     } else if (event.target.id === this.id) {
